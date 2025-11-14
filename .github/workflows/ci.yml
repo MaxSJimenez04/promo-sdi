@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  install_test:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,7 @@ jobs:
         run: npm test
     
   build-docker:
-    needs: test
+    needs: install_test
     runs-on: ubuntu-latest
   
     steps:
@@ -55,4 +55,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/promo-sdi:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}promo-sdi:latest
