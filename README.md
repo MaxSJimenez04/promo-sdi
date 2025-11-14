@@ -1,2 +1,2 @@
-# mi-app-node
+# promo-sdi
 Práctica GitHub Actions
