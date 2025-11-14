@@ -2,9 +2,9 @@ name: Node CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   install_test:
@@ -37,22 +37,18 @@ jobs:
       - name: Configurar Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Construir imagen Docker
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          push: false
-          tags: dockerdude37/mi-app-node:${{ github.sha }}
       - name: Login en Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: Build y push a Docker Hub
+
+      - name: Build y push de la imagen
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}promo-sdi:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/promo-sdi:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/promo-sdi:${{ github.sha }}
